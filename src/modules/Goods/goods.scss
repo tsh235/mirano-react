@@ -1,0 +1,42 @@
+@use '../../scss/variables' as *;
+@use '../../scss/media' as *;
+
+.goods {
+  padding: 60px 0;
+
+  @include tablet {
+    padding: 40px 0;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+
+    @media (max-width: 1360px) {
+      display: unset;
+    }
+  }
+
+  &__list {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 310px);
+    gap: 24px 20px;
+    max-width: 970px;
+    margin: 0 auto;
+
+    @include mobile {
+      grid-template-columns: repeat(2, minmax(140px, 1fr));
+      column-gap: 12px;
+    }
+  }
+
+  &__no-product {
+    grid-column: 1/-1;
+    text-align: center;
+    font-size: 24px;
+    color: $orange;
+  }
+}

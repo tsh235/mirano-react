@@ -1,0 +1,262 @@
+@use '../../scss/variables' as *;
+@use '../../scss/media' as *;
+
+.order {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  padding: 20px 9px;
+  background-color: rgba($dark, .6);
+  overflow: hidden auto;
+
+  &__wrapper {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 624px;
+    padding: 60px 32px;
+    border-radius: 32px;
+    background-color: $white;
+
+    @include mobile {
+      gap: 24px;
+      padding: 32px 16px;
+      border-radius: 20px;
+    }
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 28px;
+    text-align: center;
+
+    @include mobile {
+      font-size: 20px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    @include mobile {
+      gap: 16px;
+    }
+  }
+
+  &__legend {
+    margin-bottom: 12px;
+
+    @include mobile {
+      margin-bottom: 4px;
+    }
+  }
+
+  &__input-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+
+    @include mobile {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  &__input {
+    width: calc(50% - 6px);
+    padding: 0 16px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: $bg;
+    border: 1px solid transparent;
+    outline: none;
+
+    @include mobile {
+      width: 100%;
+    }
+
+    &::placeholder {
+      opacity: .3;
+    }
+
+    &_min {
+      width: calc(25% - 9px);
+
+      @include mobile {
+        width: calc(50% - 4px);
+      }
+    }
+
+    &:hover {
+      background-color: $pattern;
+    }
+
+    &:focus-visible {
+      border-color: $light-orange;
+      background-color: $bg;
+    }
+  }
+
+  &__payment {
+    margin-bottom: 12px;
+  }
+
+  &__label-radio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__radio {
+    appearance: none;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 1px solid $orange;
+    border-radius: 50%;
+    background-color: $white;
+    outline: none;
+
+    &:focus-visible {
+      box-shadow: 0 0 10px rgba($dark, .8);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: block;
+      width: 10px;
+      height: 10px;
+      background-color: transparent;
+      border-radius: 50%;
+    }
+
+    &:checked::after {
+      background-color: $orange;
+    }
+  }
+
+  &__delivery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+
+    @include mobile {
+      gap: 8px;
+    }
+  }
+
+  &__select-wrapper {
+    position: relative;
+    max-width: 190px;
+    width: 100%;
+    height: 40px;
+
+    @include mobile {
+      max-width: 160px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 16px;
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: url("/img/select-arrow.svg") center/contain no-repeat;
+      pointer-events: none;
+      transition: transform 0.3s;
+    }
+
+    &_active::after {
+      transform: translateY(-50%) scale(-1);
+    }
+  }
+
+  &__select {
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 30px 8px 16px;
+    background-color: $bg;
+    border: 1px solid transparent;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $pattern;
+    }
+
+    &:focus-visible {
+      border-color: $light-orange;
+      background-color: $bg;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__btn {
+    max-width: 274px;
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    background-color: #f0a35b;
+    border-radius: 32px;
+    border: 1px solid transparent;
+    color: #fff;
+    outline: none;
+
+    @include mobile {
+      max-width: 169px;
+      height: 35px;
+    }
+
+    &:hover {
+      background-color: $orange;
+    }
+    &:focus-visible {
+      border-color: $light-orange;
+      background-color: $orange;
+    }
+    &:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 34px;
+    line-height: 1;
+    outline: none;
+
+    &:hover, &:focus-visible {
+      color: $orange;
+    }
+
+    &:focus-visible {
+      border-color: $orange;
+    }
+  }
+}

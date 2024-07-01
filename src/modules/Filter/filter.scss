@@ -1,0 +1,207 @@
+@use '../../scss/variables' as *;
+@use '../../scss/media' as *;
+
+.filter {
+
+  &__form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    @include mobile {
+      gap: 8px;
+    }
+
+    &_choices {
+      gap: 64px;
+
+      @include mobile {
+        gap: 40px;
+      }
+    }
+  }
+
+  &__radio {
+    position: absolute;
+    appearance: none;
+  }
+  
+  &__label {
+    display: inline-block;
+    padding: 0 16px 0 60px;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    border-radius: 300px;
+    background-color: $white;
+    background-position: left 16px center;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    cursor: pointer;
+    outline: 1px solid transparent;
+    outline-offset: 2px;
+
+    @include mobile {
+      padding: 0 12px 0 40px;
+      min-height: 40px;
+      background-size: 24px;
+    }
+
+    &_flowers {
+      background-image: url('/img/flowers@1x.png');
+      background-image: image-set(
+        url("/img/flowers@1x.avif") type("image/avif") 1x,
+        url("/img/flowers@2x.avif") type("image/avif") 2x,
+        url("/img/flowers@1x.webp") type("image/webp") 1x,
+        url("/img/flowers@2x.webp") type("image/webp") 2x,
+        url("/img/flowers@1x.jpg") type("image/jpg") 1x,
+        url("/img/flowers@2x.jpg") type("image/jpg") 2x
+      );
+    }
+    &_toys {
+      background-image: url('/img/toys@1x.png');
+      background-image: image-set(
+        url("/img/toys@1x.avif") type("image/avif") 1x,
+        url("/img/toys@2x.avif") type("image/avif") 2x,
+        url("/img/toys@1x.webp") type("image/webp") 1x,
+        url("/img/toys@2x.webp") type("image/webp") 2x,
+        url("/img/toys@1x.jpg") type("image/jpg") 1x,
+        url("/img/toys@2x.jpg") type("image/jpg") 2x
+      );
+    }
+    &_postcard {
+      background-image: url('/img/postcard@1x.png');
+      background-image: image-set(
+        url("/img/postcard@1x.avif") type("image/avif") 1x,
+        url("/img/postcard@2x.avif") type("image/avif") 2x,
+        url("/img/postcard@1x.webp") type("image/webp") 1x,
+        url("/img/postcard@2x.webp") type("image/webp") 2x,
+        url("/img/postcard@1x.jpg") type("image/jpg") 1x,
+        url("/img/postcard@2x.jpg") type("image/jpg") 2x
+      );
+    }
+
+    &:hover {
+      background-color: $footer;
+    }
+  }
+
+  &__radio:focus-visible + &__label {
+    outline-color: $orange;
+  }
+  
+  &__radio:checked + &__label {
+    background-color: $light-orange;
+    color: $white;
+  }
+
+  &__choices {
+    position: relative;
+  }
+
+  &__select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: url('/img/arrow.svg') no-repeat center/contain;
+      transition: .36s;
+    }
+
+    &_open {
+      &::after {
+        transform: scale(-1);
+      }
+    }
+
+    &:hover, &:focus-visible {
+      color: $orange;
+    }
+  }
+
+  &__choices-box {
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    border-radius: 12px;
+    background: $white;
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 24px;
+    max-width: 276px;
+    width: 100%;
+  }
+
+  &__input-price {
+    padding: 0 16px;
+    width: 110px;
+    height: 40px;
+    background-color: $bg;
+    border-radius: 32px;
+    border: 1px solid transparent;
+    outline: none;
+
+    &::placeholder {
+      color: $dark;
+    }
+
+    &:hover {
+      background-color: $light-orange;
+    }
+
+    &:focus-visible {
+      background-color: $bg;
+      border-color: $light-orange;
+    }
+
+    @include mobile {
+      width: 90px;
+    }
+  }
+
+  &__type-list {
+    padding: 24px;
+
+    @include mobile {
+      padding: 16px;
+    }
+  }
+
+  &__type-item {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__type-btn {
+    white-space: nowrap;
+    &:hover {
+      color: $light-orange;
+    }
+    
+    &_active {
+      color: $orange;
+    }
+  }
+}
