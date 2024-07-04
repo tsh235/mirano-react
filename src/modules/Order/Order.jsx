@@ -1,8 +1,25 @@
 import './order.scss';
 
-export const Order = () => (
-  <>
-    <div className="order" style={{display: 'none'}}>
+export const Order = () => {
+  const isOrder = false;
+  const isOpen = false;
+
+  if (!isOpen) return null;
+  
+  if (isOrder) {
+    return (
+      <div className="order">
+        <div className="order__wrapper">
+          <h2 className="order__title">Заказ оформлен</h2>
+          <p className="order__success">Номер заказа: 579687658454654564</p>
+          <button className="order__close" type="button">&times;</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="order">
       <div className="order__wrapper">
         <h2 className="order__title">Оформить заказ</h2>
 
@@ -64,13 +81,5 @@ export const Order = () => (
         <button className="order__close" type="button">&times;</button>
       </div>
     </div>
-
-    <div className="order" style={{display: 'none'}}>
-      <div className="order__wrapper">
-        <h2 className="order__title">Заказ оформлен</h2>
-        <p className="order__success">Номер заказа: 579687658454654564</p>
-        <button className="order__close" type="button">&times;</button>
-      </div>
-    </div>
-  </>
-);
+  );
+};

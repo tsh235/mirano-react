@@ -1,0 +1,68 @@
+@use '@scss/variables' as *;
+
+.item {
+  display: grid;
+  gap: 8px 12px;
+  grid-template-columns: 54px 1fr min-content;
+  grid-template-areas: 
+  'image title title'
+  'image counter price'
+  ;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba($dark, .04);
+  }
+}
+
+.img {
+  grid-area: image;
+  border-radius: 12px;
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+}
+
+.title {
+  grid-area: title;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.counter {
+  grid-area: counter;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn {
+  flex-shrink: 0;
+  width: 29px;
+  height: 29px;
+  background-color: $bg;
+  border-radius: 6px;
+
+  &:hover, &:focus-visible {
+    background-color: $light-orange;
+    color: $white;
+  }
+}
+
+.input {
+  width: 22px;
+  font-size: 14px;
+  text-align: center;
+  outline: 1px solid transparent;
+  border-radius: 4px;
+
+  &:hover, &:focus-visible {
+    outline-color: $light-orange;
+  }
+}
+
+.price {
+  grid-area: price;
+  align-self: center;
+}

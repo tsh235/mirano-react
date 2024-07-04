@@ -1,8 +1,7 @@
-@use '../../scss/variables' as *;
-@use '../../scss/media' as *;
+@use '@scss/variables' as *;
+@use '@scss/media' as *;
 
 .filter {
-
   &__form {
     display: flex;
     justify-content: space-between;
@@ -38,7 +37,7 @@
   &__label {
     display: inline-block;
     padding: 0 16px 0 60px;
-    min-height: 72px;
+    min-height: 54px;
     display: flex;
     align-items: center;
     border-radius: 300px;
@@ -52,7 +51,7 @@
 
     @include mobile {
       padding: 0 12px 0 40px;
-      min-height: 40px;
+      min-height: 36px;
       background-size: 24px;
     }
 
@@ -102,46 +101,6 @@
   &__radio:checked + &__label {
     background-color: $light-orange;
     color: $white;
-  }
-
-  &__choices {
-    position: relative;
-  }
-
-  &__select {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    outline: none;
-
-    &::after {
-      content: '';
-      display: block;
-      width: 8px;
-      height: 8px;
-      background: url('/img/arrow.svg') no-repeat center/contain;
-      transition: .36s;
-    }
-
-    &_open {
-      &::after {
-        transform: scale(-1);
-      }
-    }
-
-    &:hover, &:focus-visible {
-      color: $orange;
-    }
-  }
-
-  &__choices-box {
-    position: absolute;
-    top: calc(100% + 20px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: fit-content;
-    border-radius: 12px;
-    background: $white;
   }
 
   &__price {
@@ -196,7 +155,7 @@
 
   &__type-btn {
     white-space: nowrap;
-    &:hover {
+    &:hover, &:focus-visible {
       color: $light-orange;
     }
     

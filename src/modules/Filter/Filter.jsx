@@ -1,5 +1,5 @@
+import { Choices } from '../Choices/Choices.jsx';
 import './filter.scss';
-import './choices.scss';
 
 export const Filter = () => (
   <section className="filter">
@@ -18,22 +18,28 @@ export const Filter = () => (
         </fieldset>
 
         <fieldset className="filter__group filter__group_choices">
-          <div className="filter__choices choices">
-            <button className="filter__select choices__btn" type="button">Цена</button>
-            <div className="filter__choices-box choices__box">
-              <fieldset className="filter__price">
-                <input className="filter__input-price" type="text" placeholder="от" name="minPrice" />
-                <input className="filter__input-price" type="text" placeholder="до" name="maxPrice" />
-              </fieldset>
-            </div>
-          </div>
+          <Choices buttonLabel="Цена">
+            <fieldset className="filter__price">
+              <input className="filter__input-price" type="text" placeholder="от" name="minPrice" />
+              <input className="filter__input-price" type="text" placeholder="до" name="maxPrice" />
+            </fieldset>
+          </Choices>
 
-          <div className="filter__choices filter__choices_type choices">
-            <button className="filter__select choices__btn" type="button">Тип товара</button>
-            <div className="filter__choices-box filter__choices-box_type choices__box"></div>
-          </div>
+          <Choices buttonLabel="Тип товара">
+            <ul className="filter__type-list">
+              <li className="filter__type-item">
+                <button className="filter__type-btn" type="button">Монобукеты</button>
+              </li>
+              <li className="filter__type-item">
+                <button className="filter__type-btn" type="button">Авторские букеты</button>
+              </li>
+              <li className="filter__type-item">
+                <button className="filter__type-btn" type="button">Цветы в корзине</button>
+              </li>
+            </ul>
+          </Choices>
         </fieldset>
       </form>
     </div>
   </section>
-)
+);

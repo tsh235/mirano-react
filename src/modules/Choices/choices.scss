@@ -1,0 +1,41 @@
+@use '@scss/variables' as *;
+
+.choices {
+  position: relative;
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: url('/img/arrow.svg') no-repeat center/contain;
+      transition: .36s;
+    }
+
+    &_open {
+      &::after {
+        transform: scale(-1);
+      }
+    }
+
+    &:hover, &:focus-visible {
+      color: $orange;
+    }
+  }
+
+  &__box {
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    border-radius: 12px;
+    background-color: $white;
+  }
+}

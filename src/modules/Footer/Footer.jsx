@@ -1,31 +1,34 @@
-import './footer.scss';
+import classNames from 'classnames';
+// пример работы с модульными стилями
+// вместо style можно использовать все что угодно, но чтобы было понятно, что это стили (см. subscribe)
+import style from './Footer.module.scss';
 
 export const Footer = () => (
-  <footer className="footer">
-    <div className="container footer__container">
-      <img className="footer__logo" src="/img/logo.svg" alt="Логотип Mirano Flower Buetique" width="200" height="65" />
+  <footer className={style.footer}>
+    <div className={classNames("container", style.container)}>
+      <img className={style.logo} src="/img/logo.svg" alt="Логотип Mirano Flower Buetique" width="200" height="65" />
       
-      <address className="footer__contacts">
-        <a className="footer__email footer__link" href="mailto:mirano@gmail.com">Mirano@gmail.com</a>
+      <address className={style.contacts}>
+        <a className={classNames(style.email, style.link)} href="mailto:mirano@gmail.com">Mirano@gmail.com</a>
 
-        <ul className="footer__social">
-          <li className="footer__social-item">
-            <a className="footer__social-link" href="#!" aria-label="Ссылка на канал в Telegram">
-              <svg className="footer__social-icon" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ul className={style.social}>
+          <li className={style.socialItem}>
+            <a className={style.socialLink} href="#!" aria-label="Ссылка на канал в Telegram">
+              <svg className={style.socialIcon} viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.5 2.625C8.221 2.625 3.125 7.721 3.125 14C3.125 20.279 8.221 25.375 14.5 25.375C20.779 25.375 25.875 20.279 25.875 14C25.875 7.721 20.779 2.625 14.5 2.625ZM19.778 10.36C19.6074 12.1573 18.868 16.5253 18.4926 18.5386C18.3334 19.3918 18.0149 19.6761 17.7191 19.7103C17.0594 19.7671 16.5589 19.278 15.9219 18.8571C14.9209 18.1974 14.3521 17.7879 13.3853 17.1509C12.2591 16.4115 12.9871 16.002 13.6355 15.3423C13.8061 15.1716 16.7181 12.5212 16.775 12.2824C16.7829 12.2462 16.7818 12.2086 16.7719 12.173C16.762 12.1373 16.7436 12.1045 16.7181 12.0776C16.6499 12.0208 16.5589 12.0435 16.4792 12.0549C16.3769 12.0776 14.7844 13.1355 11.679 15.2285C11.224 15.5356 10.8145 15.6949 10.4505 15.6835C10.041 15.6721 9.2675 15.456 8.68738 15.2626C7.97075 15.0351 7.41337 14.91 7.45888 14.5119C7.48163 14.3071 7.766 14.1024 8.30063 13.8863C11.6221 12.4416 13.8289 11.4861 14.9323 11.0311C18.0945 9.71163 18.7429 9.48413 19.1751 9.48413C19.2661 9.48413 19.4823 9.50688 19.6188 9.62063C19.7325 9.71163 19.7666 9.83675 19.778 9.92775C19.7666 9.996 19.7894 10.2008 19.778 10.36Z" fill="currentColor"/>
               </svg>                  
             </a>
           </li>
-          <li className="footer__social-item">
-            <a className="footer__social-link" href="#!" aria-label="Ссылка на канал в Youtobe">
-              <svg className="footer__social-icon" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <li className={style.socialItem}>
+            <a className={style.socialLink} href="#!" aria-label="Ссылка на канал в Youtobe">
+              <svg className={style.socialIcon} viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.1667 17.4999L18.2217 13.9999L12.1667 10.4999V17.4999ZM25.6534 8.36492C25.805 8.91325 25.91 9.64825 25.98 10.5816C26.0617 11.5149 26.0967 12.3199 26.0967 13.0199L26.1667 13.9999C26.1667 16.5549 25.98 18.4333 25.6534 19.6349C25.3617 20.6849 24.685 21.3616 23.635 21.6533C23.0867 21.8049 22.0834 21.9099 20.5434 21.9799C19.0267 22.0616 17.6384 22.0966 16.355 22.0966L14.5 22.1666C9.61171 22.1666 6.56671 21.9799 5.36504 21.6533C4.31504 21.3616 3.63837 20.6849 3.34671 19.6349C3.19504 19.0866 3.09004 18.3516 3.02004 17.4183C2.93837 16.4849 2.90337 15.6799 2.90337 14.9799L2.83337 13.9999C2.83337 11.4449 3.02004 9.56659 3.34671 8.36492C3.63837 7.31492 4.31504 6.63825 5.36504 6.34659C5.91337 6.19492 6.91671 6.08992 8.45671 6.01992C9.97337 5.93825 11.3617 5.90325 12.645 5.90325L14.5 5.83325C19.3884 5.83325 22.4334 6.01992 23.635 6.34659C24.685 6.63825 25.3617 7.31492 25.6534 8.36492Z" fill="currentColor"/>
               </svg>                     
             </a>
           </li>
-          <li className="footer__social-item">
-            <a className="footer__social-link" href="#!" aria-label="Ссылка на группу ВКонтекте">
-              <svg className="footer__social-icon" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <li className={style.socialItem}>
+            <a className={style.socialLink} href="#!" aria-label="Ссылка на группу ВКонтекте">
+              <svg className={style.socialIcon} viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.5 2.625C8.21768 2.625 3.125 7.71768 3.125 14C3.125 20.2823 8.21768 25.375 14.5 25.375C20.7823 25.375 25.875 20.2823 25.875 14C25.875 7.71768 20.7823 2.625 14.5 2.625ZM18.8746 15.4586C18.8746 15.4586 19.8806 16.4515 20.1283 16.9125C20.1354 16.922 20.1389 16.9314 20.1413 16.9362C20.242 17.1056 20.2657 17.2371 20.2159 17.3355C20.133 17.499 19.8486 17.5796 19.7515 17.5867H17.9741C17.8509 17.5867 17.5926 17.5547 17.2798 17.339C17.0392 17.1708 16.8023 16.8947 16.5712 16.6257C16.2264 16.2252 15.9278 15.8792 15.6268 15.8792C15.5886 15.8792 15.5506 15.8852 15.5143 15.897C15.2868 15.9705 14.9953 16.2951 14.9953 17.1601C14.9953 17.4303 14.782 17.5855 14.6315 17.5855H13.8175C13.5402 17.5855 12.0958 17.4883 10.8162 16.1387C9.24973 14.4858 7.8397 11.1705 7.82785 11.1397C7.73898 10.9252 7.92264 10.8103 8.12289 10.8103H9.91801C10.1574 10.8103 10.2356 10.956 10.2901 11.0852C10.354 11.2356 10.5887 11.834 10.9737 12.507C11.5982 13.6042 11.9809 14.0498 12.2878 14.0498C12.3453 14.0491 12.4019 14.0344 12.4525 14.0071C12.853 13.7843 12.7783 12.3565 12.7606 12.0603C12.7606 12.0046 12.7594 11.4217 12.5544 11.142C12.4075 10.9394 12.1575 10.8624 12.0058 10.834C12.0672 10.7493 12.1481 10.6806 12.2416 10.6337C12.5165 10.4963 13.0118 10.4761 13.5035 10.4761H13.7772C14.3104 10.4832 14.4479 10.5176 14.641 10.5662C15.032 10.6598 15.0403 10.9122 15.0059 11.776C14.9953 12.0212 14.9846 12.2985 14.9846 12.6255C14.9846 12.6966 14.9811 12.7724 14.9811 12.853C14.9692 13.2926 14.955 13.7915 15.2654 13.9964C15.3059 14.0218 15.3527 14.0354 15.4005 14.0355C15.5083 14.0355 15.833 14.0355 16.7122 12.5272C16.9833 12.0417 17.219 11.5372 17.4172 11.0176C17.435 10.9868 17.4871 10.892 17.5487 10.8553C17.5942 10.8321 17.6446 10.8203 17.6957 10.8209H19.806C20.0358 10.8209 20.1934 10.8553 20.223 10.9442C20.2752 11.0852 20.2136 11.5153 19.2502 12.8198L18.8201 13.3874C17.9469 14.532 17.9469 14.5901 18.8746 15.4586Z" fill="currentColor"/>
               </svg>                           
             </a>
@@ -33,12 +36,12 @@ export const Footer = () => (
         </ul>
       </address>
 
-      <ul className="footer__developers">
-        <li className="footer__developers-item">Designer: <a className="footer__link" href="https://t.me/Mrshmallowww">Anastasia Ilina</a></li>
-        <li className="footer__developers-item">Developer: <a className="footer__link" href="https://t.me/TanyaSh75">Tatyana Shustrova</a></li>
+      <ul className={style.developers}>
+        <li className={style.developersItem}>Designer: <a className={style.link} href="https://t.me/Mrshmallowww">Anastasia Ilina</a></li>
+        <li className={style.developersItem}>Developer: <a className={style.link} href="https://t.me/TanyaSh75">Tatyana Shustrova</a></li>
       </ul>
 
-      <p className="footer__copyright">&copy;MIRANO, 2024</p>
+      <p className={style.copyright}>&copy;MIRANO, 2024</p>
     </div>
   </footer>
 );
