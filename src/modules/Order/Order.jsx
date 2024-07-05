@@ -1,14 +1,26 @@
+import { useDispatch, useSelector } from 'react-redux';
 import './order.scss';
+import { toggleModal } from '../../redux/modalSlice.js';
 
 export const Order = () => {
   const isOrder = false;
-  const isOpen = false;
+  const isOpen = useSelector((state) => state.modal.isOpen);
+
+  const dispatch = useDispatch();
+  
+  const handlerModalClose = ({target}) => {
+    const order = document.querySelector('.order');
+    console.log('e: ', target);
+    if (target.closest('.order__close') || target === order) {
+      dispatch(toggleModal());
+    }
+  };
 
   if (!isOpen) return null;
   
   if (isOrder) {
     return (
-      <div className="order">
+      <div className="order" onClick={handlerModalClose}>
         <div className="order__wrapper">
           <h2 className="order__title">Заказ оформлен</h2>
           <p className="order__success">Номер заказа: 579687658454654564</p>
@@ -19,7 +31,7 @@ export const Order = () => {
   }
 
   return (
-    <div className="order">
+    <div className="order" onClick={handlerModalClose}>
       <div className="order__wrapper">
         <h2 className="order__title">Оформить заказ</h2>
 

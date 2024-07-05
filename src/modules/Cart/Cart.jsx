@@ -3,6 +3,7 @@ import { goodsArray } from '../../goodsArray.js';
 import { CartItem } from '../CartItem/CartItem.jsx';
 import './cart.scss';
 import { toggleCart } from '../../redux/cartSlice.js';
+import { toggleModal } from '../../redux/modalSlice.js';
 
 export const Cart = () => {
   const isOpen = useSelector((state) => state.cart.isOpen);
@@ -10,6 +11,10 @@ export const Cart = () => {
 
   const handlerCartClose = () => {
     dispatch(toggleCart());
+  };
+
+  const handlerModalOpen = () => {
+    dispatch(toggleModal());
   };
 
   if (!isOpen) return null;
@@ -34,7 +39,7 @@ export const Cart = () => {
         </ul>
   
         <div className="cart__footer">
-          <button className="cart__order-btn">Оформить</button>
+          <button className="cart__order-btn" onClick={handlerModalOpen}>Оформить</button>
           <p className="cart__price cart__price_total">0&nbsp;₽</p>
         </div>
       </div>
