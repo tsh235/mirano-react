@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './header.scss';
 import { toggleCart } from '../../redux/cartSlice.js';
 
@@ -8,6 +8,8 @@ export const Header = () => {
   const handlerCartToogle = () => {
     dispatch(toggleCart());
   };
+
+  const count = useSelector(state => state.cart.items.length);
   
   return (
     <header className="header">
@@ -23,7 +25,7 @@ export const Header = () => {
 
         <img className="header__logo" src="/img/logo.svg" alt="Логотип Mirano Flower Buetique" width="200" height="65" />
 
-        <button className="header__cart-btn" onClick={handlerCartToogle}>0</button>
+        <button className="header__cart-btn" onClick={handlerCartToogle}>{count}</button>
       </div>
     </header>
   )

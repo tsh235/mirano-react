@@ -8,7 +8,7 @@ export const CartItem = ({img, title, price}) => (
 
     <div className={s.counter}>
       <button className={s.btn}>-</button>
-      <input className={s.input} type="number" name="count" min="0" max="99" value="5" />
+      <input className={s.input} type="number" name="count" min="0" max="99" value="1" />
       <button className={s.btn}>+</button>
     </div>
 
