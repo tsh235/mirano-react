@@ -2,26 +2,16 @@
 @use '@scss/media' as *;
 
 .preload {
-  position: absolute;
-  inset: 0;
-  background-color: $bg;
-  z-index: 999;
-  justify-content: center;
-  padding-top: 100px;
+  display: block;
+  border: 5px solid $light-orange;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.5s linear infinite;
 
   @include mobile {
     padding-top: 50px;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    border: 5px solid $green;
-    border-top: 5px solid $light-orange;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
   }
 }
 

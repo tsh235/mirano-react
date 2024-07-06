@@ -1,4 +1,5 @@
 import './goods.scss';
+import './../../scss/preload.scss';
 import { Card } from '../Card/Card.jsx';
 import { Cart } from '../Cart/Cart.jsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,11 +11,6 @@ export const Goods = () => {
   const dispatch = useDispatch();
   const {items: goods, status: goodsStatus, error, type, title} = useSelector(state => state.goods);
 
-  // let sectionTitle = '';
-  // if (type === 'bouquets') {
-  //   sectionTitle = 'Цветы'
-  // } else
-
   useEffect(() => {
     if (goodsStatus === 'idle') {
       dispatch(fetchGoods({type}));
@@ -24,7 +20,7 @@ export const Goods = () => {
   let content = null;
 
   if (goodsStatus === 'loading') {
-    content = <p className='preload'>Loading...</p>
+    content = <div className='preload'></div>
   }
 
   if (goodsStatus === 'success') {
