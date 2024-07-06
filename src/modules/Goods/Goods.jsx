@@ -8,7 +8,12 @@ import { API_URL } from '../../const.js';
 
 export const Goods = () => {
   const dispatch = useDispatch();
-  const {items: goods, status: goodsStatus, error, type} = useSelector(state => state.goods);
+  const {items: goods, status: goodsStatus, error, type, title} = useSelector(state => state.goods);
+
+  // let sectionTitle = '';
+  // if (type === 'bouquets') {
+  //   sectionTitle = 'Цветы'
+  // } else
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
@@ -47,7 +52,7 @@ export const Goods = () => {
   return (
     <section className="goods">
       <div className="container">
-        <h2 className="goods__title section-title">Цветы</h2>
+        <h2 className="goods__title section-title">{title}</h2>
   
         <div className="goods__container">
           {content}

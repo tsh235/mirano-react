@@ -13,6 +13,7 @@ const initialState = {
   status: 'idle',
   error: null,
   type: 'bouquets',
+  title: 'Цветы',
 }
 
 const goodsSlice = createSlice({
@@ -21,6 +22,7 @@ const goodsSlice = createSlice({
   reducers: {
     goodsType(state, action) {
       state.type = action.payload.type;
+      state.title = action.payload.title;
       state.status = 'idle';
     },
   },

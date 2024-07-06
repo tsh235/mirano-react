@@ -7,8 +7,8 @@ import { goodsType } from '../../redux/goodsSlice.js';
 export const Filter = () => {
   const dispatch = useDispatch();
   
-  const handleChangeType = (type) => {
-    dispatch(goodsType({type}));
+  const handleChangeType = (type, title) => {
+    dispatch(goodsType({type, title}));
   };
   
   const [openChoice, setOpenChoice] = useState(null);
@@ -26,19 +26,19 @@ export const Filter = () => {
             <input className="filter__radio" type="radio" name="type" id="bouquets"
               value="bouquets"
               defaultChecked
-              onChange={() => handleChangeType('bouquets')} 
+              onChange={() => handleChangeType('bouquets', 'Цветы')} 
             />
             <label className="filter__label filter__label_flowers" htmlFor="bouquets">Цветы</label>
           
             <input className="filter__radio" type="radio" name="type" id="toys"
               value="toys"
-              onChange={() => handleChangeType('toys')}
+              onChange={() => handleChangeType('toys', 'Игрушки')}
             />
             <label className="filter__label filter__label_toys" htmlFor="toys">Игрушки</label>
           
             <input className="filter__radio" type="radio" name="type" id="postcards"
               value="postcards"
-              onChange={() => handleChangeType('postcards')}
+              onChange={() => handleChangeType('postcards', 'Открытки')}
             />
             <label className="filter__label filter__label_postcard" htmlFor="postcards">Открытки</label>
           </fieldset>
