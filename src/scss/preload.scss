@@ -9,6 +9,7 @@
   width: 40px;
   height: 40px;
   animation: spin 0.5s linear infinite;
+  margin: 0 auto;
 
   @include mobile {
     padding-top: 50px;
