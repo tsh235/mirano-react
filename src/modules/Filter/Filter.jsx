@@ -4,21 +4,20 @@ import './filter.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../redux/goodsSlice.js';
 import { debounce, getValidFilters } from '../../util.js';
-import { setFilters } from '../../redux/filterSlice.js';
+import { changeType, changePrice } from '../../redux/filtersSlice.js';
+import { FilterRadio } from './FilterRadio.jsx';
 
-export const Filter = () => {
+const filterTypes = [
+  {value: 'bouquets', title: 'Цветы'},
+  {value: 'toys', title: 'Игрушки'},
+  {value: 'postcards', title: 'Открытки'},
+];
+
+export const Filter = ({setTitleGoods}) => {
   const dispatch = useDispatch();
   
   const [openChoice, setOpenChoice] = useState(null);
-  
   const filters = useSelector(state => state.filters);
-  // const [filters, setFiltres] = useState({
-    //   type: 'bouquets',
-  //   minPrice: '',
-  //   maxPrice: '',
-  //   category: '',
-  // });
-
   const prevFiltersRef = useRef({});
 
   const debouncedFetchGoods = useRef(
@@ -33,12 +32,13 @@ export const Filter = () => {
 
     if (prevFilters.type !== filters.type) {
       dispatch(fetchGoods(validFilters));
+      setTitleGoods(filterTypes.find(item => item.value === filters.type).title);
     } else {
-      debouncedFetchGoods(filters);
+      debouncedFetchGoods(validFilters);
     }
 
     prevFiltersRef.current = filters;
-  }, [dispatch, debouncedFetchGoods, filters]);
+  }, [dispatch, debouncedFetchGoods, setTitleGoods, filters]);
   
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
@@ -46,18 +46,13 @@ export const Filter = () => {
 
   const handleChangeType = ({target}) => {
     const {value} = target;
-    const newFilters = {...filters, type: value, minPrice: '', maxPrice: ''};
-    dispatch(setFilters(newFilters));
-    handleChoicesToggle();
+    dispatch(changeType(value));
+    setOpenChoice(-1);
   };
 
   const handleChangePrice = ({target}) => {
     const {name, value} = target;
-    const newFilters = {
-      ...filters,
-      [name]: !isNaN(parseInt(value, 10)) ? value : '',
-    };
-    dispatch(setFilters(newFilters));
+    dispatch(changePrice({name, value}));
   };
 
   return (
@@ -66,26 +61,14 @@ export const Filter = () => {
       <div className="container">
         <form className="filter__form">
           <fieldset className="filter__group">
-            <input className="filter__radio" type="radio" name="type" id="bouquets"
-              value="bouquets"
-              checked={filters.type === 'bouquets'}
-              onChange={handleChangeType} 
-            />
-            <label className="filter__label filter__label_flowers" htmlFor="bouquets">Цветы</label>
-          
-            <input className="filter__radio" type="radio" name="type" id="toys"
-              value="toys"
-              checked={filters.type === 'toys'}
-              onChange={handleChangeType}
-            />
-            <label className="filter__label filter__label_toys" htmlFor="toys">Игрушки</label>
-          
-            <input className="filter__radio" type="radio" name="type" id="postcards"
-              value="postcards"
-              checked={filters.type === 'postcards'}
-              onChange={handleChangeType}
-            />
-            <label className="filter__label filter__label_postcard" htmlFor="postcards">Открытки</label>
+            {filterTypes.map(item => (
+              <FilterRadio
+                key={item.value}
+                handleChangeType={handleChangeType}
+                data={item}
+                type={filters.type}
+              />))
+            }
           </fieldset>
 
           <fieldset className="filter__group filter__group_choices">

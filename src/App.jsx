@@ -5,12 +5,13 @@ import { Goods } from './modules/Goods/Goods.jsx';
 import { Subscribe } from './modules/Subscribe/Subscribe.jsx';
 import { Footer } from './modules/Footer/Footer.jsx';
 import { Order } from './modules/Order/Order.jsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerCart } from './redux/cartSlice.js';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const [titleGoods, setTitleGoods] = useState('');
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -23,14 +24,14 @@ export const App = () => {
   
   return (
     <>
-      <Header />
+      <Header setTitleGoods={setTitleGoods}/>
 
       <main>
         <Hero />
 
-        <Filter />
+        <Filter setTitleGoods={setTitleGoods}/>
 
-        <Goods />
+        <Goods title={titleGoods}/>
 
         <Subscribe />
       </main>

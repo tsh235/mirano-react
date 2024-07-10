@@ -5,8 +5,8 @@ import { Cart } from '../Cart/Cart.jsx';
 import { useSelector } from 'react-redux';
 import { API_URL } from '../../const.js';
 
-export const Goods = () => {
-  const {items: goods, status: goodsStatus, error, title} = useSelector(state => state.goods);
+export const Goods = ({title}) => {
+  const {items: goods, status: goodsStatus, error} = useSelector(state => state.goods);
 
   let content = null;
 

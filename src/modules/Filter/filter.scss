@@ -55,7 +55,7 @@
       background-size: 24px;
     }
 
-    &_flowers {
+    &_bouquets {
       background-image: url('/img/flowers@1x.png');
       background-image: image-set(
         url("/img/flowers@1x.avif") type("image/avif") 1x,
@@ -77,7 +77,7 @@
         url("/img/toys@2x.jpg") type("image/jpg") 2x
       );
     }
-    &_postcard {
+    &_postcards {
       background-image: url('/img/postcard@1x.png');
       background-image: image-set(
         url("/img/postcard@1x.avif") type("image/avif") 1x,

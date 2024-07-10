@@ -12,7 +12,6 @@ const initialState = {
   items: [],
   status: 'idle',
   error: null,
-  title: '',
 }
 
 const goodsSlice = createSlice({
@@ -25,20 +24,8 @@ const goodsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
-        console.log('action: ', action);
         state.status = 'success';
         state.items = action.payload;
-        switch (action.meta.arg.type) {
-          case 'bouquets':
-            state.title = 'Цветы';
-            break;
-          case 'toys':
-            state.title = 'Игрушки';
-            break;
-          case 'postcards':
-            state.title = 'Открытки';
-            break;
-        }
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = 'failed';
