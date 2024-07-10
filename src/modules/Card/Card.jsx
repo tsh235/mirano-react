@@ -6,14 +6,15 @@ import { useState } from 'react';
 
 export const Card = ({className, id, img, title, dateDelivery, price}) => {
   const dispatch = useDispatch();
-  const [btnText, setHoverText] = useState(`${price}\u00A0₽`);
+
+  const [btnText, setBtnText] = useState(`${price}\u00A0₽`);
   
-  const handleMouseOver = () => {
-    setHoverText('В корзину');
+  const handleMouseEnter = () => {
+    setBtnText('В корзину');
   };
   
   const handleMouseLeave = () => {
-    setHoverText(`${price}\u00A0₽`);
+    setBtnText(`${price}\u00A0₽`);
   };
   
   const handleAddToCart = () => {
@@ -27,7 +28,7 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
         <h3 className="card__title">{title}</h3>
         <div className="card__footer">
           <p className="card__date-delivery">{dateDelivery}</p>
-          <button className="card__btn" onClick={handleAddToCart} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>{btnText}</button>
+          <button className="card__btn" onClick={handleAddToCart} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{btnText}</button>
         </div>
       </div>
     </article>

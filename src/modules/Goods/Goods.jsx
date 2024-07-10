@@ -2,20 +2,11 @@ import './goods.scss';
 import './../../scss/preload.scss';
 import { Card } from '../Card/Card.jsx';
 import { Cart } from '../Cart/Cart.jsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods } from '../../redux/goodsSlice.js';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { API_URL } from '../../const.js';
 
 export const Goods = () => {
-  const dispatch = useDispatch();
-  const {items: goods, status: goodsStatus, error, type, title} = useSelector(state => state.goods);
-
-  useEffect(() => {
-    if (goodsStatus === 'idle') {
-      dispatch(fetchGoods({type}));
-    }
-  }, [dispatch, goodsStatus, type]);
+  const {items: goods, status: goodsStatus, error, title} = useSelector(state => state.goods);
 
   let content = null;
 

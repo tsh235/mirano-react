@@ -12,28 +12,33 @@ const initialState = {
   items: [],
   status: 'idle',
   error: null,
-  type: 'bouquets',
-  title: 'Цветы',
+  title: '',
 }
 
 const goodsSlice = createSlice({
   name: 'goods',
   initialState,
-  reducers: {
-    goodsType(state, action) {
-      state.type = action.payload.type;
-      state.title = action.payload.title;
-      state.status = 'idle';
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoods.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
+        console.log('action: ', action);
         state.status = 'success';
         state.items = action.payload;
+        switch (action.meta.arg.type) {
+          case 'bouquets':
+            state.title = 'Цветы';
+            break;
+          case 'toys':
+            state.title = 'Игрушки';
+            break;
+          case 'postcards':
+            state.title = 'Открытки';
+            break;
+        }
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = 'failed';
@@ -41,7 +46,5 @@ const goodsSlice = createSlice({
       });
   },
 });
-
-export const {goodsType} = goodsSlice.actions;
 
 export default goodsSlice.reducer;

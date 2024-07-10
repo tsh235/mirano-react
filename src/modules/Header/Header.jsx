@@ -9,7 +9,7 @@ export const Header = () => {
     dispatch(toggleCart());
   };
 
-  const count = useSelector(state => state.cart.items.length);
+  const counterCartItems = useSelector(state => state.cart.items);
   
   return (
     <header className="header">
@@ -25,7 +25,7 @@ export const Header = () => {
 
         <img className="header__logo" src="/img/logo.svg" alt="Логотип Mirano Flower Buetique" width="200" height="65" />
 
-        <button className="header__cart-btn" onClick={handlerCartToogle}>{count}</button>
+        <button className="header__cart-btn" onClick={handlerCartToogle}>{counterCartItems.length}</button>
       </div>
     </header>
   )
