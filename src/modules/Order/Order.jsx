@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import s from './Order.module.scss';
 import { closeModal } from '../../redux/orderSlice.js';
 import classNames from 'classnames';
+import { useCallback, useEffect } from 'react';
 
 export const Order = () => {
   const isOrderSuccess = false;
@@ -18,9 +19,26 @@ export const Order = () => {
   // };
 
   // а так, повесив события для элементов отдельно на каждый
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     dispatch(closeModal());
-  };
+  }, [dispatch]);
+
+  
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, handleClose]);
 
   if (!isOpen) return null;
   

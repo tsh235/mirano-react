@@ -30,9 +30,13 @@ export const Filter = ({setTitleGoods}) => {
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
 
-    if (prevFilters.type !== filters.type) {
+    if (!validFilters.type) {
+      return;
+    }
+
+    if (prevFilters.type !== validFilters.type) {
       dispatch(fetchGoods(validFilters));
-      setTitleGoods(filterTypes.find(item => item.value === filters.type).title);
+      setTitleGoods(filterTypes.find(item => item.value === validFilters.type).title);
     } else {
       debouncedFetchGoods(validFilters);
     }
@@ -47,6 +51,7 @@ export const Filter = ({setTitleGoods}) => {
   const handleChangeType = ({target}) => {
     const {value} = target;
     dispatch(changeType(value));
+    setTitleGoods(filterTypes.find(item => item.value === value).title);
     setOpenChoice(-1);
   };
 

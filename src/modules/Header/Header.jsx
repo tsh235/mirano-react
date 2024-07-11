@@ -1,27 +1,36 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './header.scss';
 import { toggleCart } from '../../redux/cartSlice.js';
+import { useState } from 'react';
+import { fetchGoods } from '../../redux/goodsSlice.js';
+import { changeType } from '../../redux/filtersSlice.js';
 
-export const Header = () => {
+export const Header = ({setTitleGoods}) => {
   const dispatch = useDispatch();
-
   const counterCartItems = useSelector(state => state.cart.items);
+  const [searchValue, setSearchValue] = useState('');
 
   const handlerCartToogle = () => {
     dispatch(toggleCart());
   };
 
-  const handleChangeSearch = () => {
-    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(fetchGoods({search: searchValue}));
+    setSearchValue('');
+    setTitleGoods('Результат поиска');
+    dispatch(changeType(''));
   };
+
+  const handleCartQuantity = () => counterCartItems.reduce((acc, item) => acc + item.quantity, 0);
   
   return (
     <header className="header">
       <div className="container header__container">
-        <form className="header__form">
+        <form className="header__form" onSubmit={handleSubmit}>
           <input className="header__input" type="search" name="search" placeholder="Букет из роз"
-            value={''}
-            onChange={handleChangeSearch}
+            value={searchValue}
+            onChange={({target}) => setSearchValue(target.value)}
           />
           <button className="header__search-btn" aria-label="Найти">
             <svg className="header__search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +41,7 @@ export const Header = () => {
 
         <img className="header__logo" src="/img/logo.svg" alt="Логотип Mirano Flower Buetique" width="200" height="65" />
 
-        <button className="header__cart-btn" onClick={handlerCartToogle}>{counterCartItems.length}</button>
+        <button className="header__cart-btn" onClick={handlerCartToogle}>{handleCartQuantity()}</button>
       </div>
     </header>
   )

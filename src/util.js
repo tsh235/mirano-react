@@ -25,4 +25,4 @@ export const debounce = (fn, msec) => {
   }
 };
 
-export const isNumber = (n) => !isNaN(parseInt(n)) && isFinite(n);
+export const isNumber = (n) => !isNaN(parseInt(n) && isFinite(n));

@@ -18,7 +18,7 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
   };
   
   const handleAddToCart = () => {
-    dispatch(addItemToCart({id, img, title, price}))
+    dispatch(addItemToCart({productId: id, quantity: 1}));
   };
 
   return (

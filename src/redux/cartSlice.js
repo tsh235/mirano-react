@@ -2,20 +2,39 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URL } from '../const.js';
 
 export const registerCart = createAsyncThunk('cart/registerCart', async() => {
-  const response = fetch(`${API_URL}/api/cart/register`, {
+  const response = await fetch(`${API_URL}/api/cart/register`, {
     method: 'POST',
     credentials: 'include',
   });
 
+  if (!response.ok) {
+    throw new Error('Не удалось зарегистрировать корзину');
+  }
+
   return await response.json();
 });
 
-export const addItemToCart = createAsyncThunk('cart/addToCart',
+export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
+  const response = await fetch(`${API_URL}/api/cart`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error('Не удалось получить данные корзины');
+  }
+
+  return await response.json();
+},);
+
+export const addItemToCart = createAsyncThunk('cart/addItemToCart',
   async ({productId, quantity}) => {
-    const response = fetch(`${API_URL}/api/cart/items`, {
+    const response = await fetch(`${API_URL}/api/cart/items`, {
       method: 'POST',
       credentials: 'include',
-      headers: 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({productId, quantity}),
     });
 
@@ -29,7 +48,7 @@ export const addItemToCart = createAsyncThunk('cart/addToCart',
 
 const initialState = {
   isOpen: false,
-  items: JSON.parse(localStorage.getItem('cartItems') || '[]'),
+  items: [],
   status: 'idle',
   accessKey: null,
   error: null,
@@ -57,9 +76,31 @@ const cartSlice = createSlice({
         state.accessKey = '';
         state.error = action.error.message;
       })
+      .addCase(fetchCart.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCart.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.items = action.payload;
+      })
+      .addCase(fetchCart.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(addItemToCart.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addItemToCart.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.items = action.payload;
+      })
+      .addCase(addItemToCart.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
   }
 });
 
-export const {toggleCart} = cartSlice.actions;
+export const {toggleCart, getTotalPrice} = cartSlice.actions;
 
 export default cartSlice.reducer;

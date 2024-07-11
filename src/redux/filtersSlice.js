@@ -14,6 +14,7 @@ const filtersSlice = createSlice({
   reducers: {
     changeType(state, action) {
       state.type = action.payload;
+      console.log('state.type: ', state.type);
       state.minPrice = '';
       state.maxPrice = '';
       state.category = '';

@@ -12,20 +12,22 @@ export const Cart = () => {
   const items = useSelector(state => state.cart.items);
 
   const cartRef = useRef(null);
-
-  const handlerCartClose = () => {
-    dispatch(toggleCart());
-  };
-
-  const handlerOrderOpen = () => {
-    dispatch(openModal());
-  };
-
+  
   useEffect(() => {
     if (isOpen) {
       cartRef.current.scrollIntoView({ behavior: 'smooth'});
     }
-  }, [isOpen])
+  }, [isOpen]);
+  
+  const handlerCartClose = () => {
+    dispatch(toggleCart());
+  };
+  
+  const handlerOrderOpen = () => {
+    dispatch(openModal());
+  };
+  
+  const handleTotalPrice = () => items.reduce((acc, item) => acc + item.price, 0);
 
   if (!isOpen) return null;
 
@@ -50,7 +52,7 @@ export const Cart = () => {
   
         <div className="cart__footer">
           <button className="cart__order-btn" onClick={handlerOrderOpen}>Оформить</button>
-          <p className="cart__price cart__price_total">0&nbsp;₽</p>
+          <p className="cart__price cart__price_total">{handleTotalPrice()}&nbsp;₽</p>
         </div>
       </div>
     </section>

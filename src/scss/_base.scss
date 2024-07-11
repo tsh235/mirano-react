@@ -142,3 +142,12 @@ input[type="number"]:focus {
     font-size: 32px;
   }
 }
+
+.empty-search {
+  text-align: center;
+  font-size: 20px;
+
+  @include mobile {
+    font-size: 16px;
+  }
+}
