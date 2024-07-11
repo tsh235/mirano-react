@@ -39,7 +39,12 @@ export const Goods = ({title}) => {
   }
 
   if (goodsStatus === 'success' && !goods.length) {
-    content = <p className='empty-search'>По вашему запросу ничего не найдено</p>
+    // content = <p className='empty-search'>По вашему запросу ничего не найдено</p>
+    content = (
+      <div className="not-found">
+        <p className="not-found__text">По вашему запросу ничего не найдено. Попробуйте изменить запрос.</p>
+      </div>
+    );
   }
 
   if (goodsStatus === 'failed') {

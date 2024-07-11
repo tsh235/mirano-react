@@ -17,9 +17,17 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
       <h4 className={s.title}>{name}</h4>
 
       <div className={s.counter}>
-        <button className={s.btn} onClick={() => handleChangeQuantity(-1)}>-</button>
+        <button
+          className={s.btn}
+          onClick={() => handleChangeQuantity(-1)}
+        >-</button>
+
         <input className={s.input} type="number" name="count" min="0" max="99" value={quantity} />
-        <button className={s.btn} onClick={() => handleChangeQuantity(1)}>+</button>
+        
+        <button
+          className={s.btn}
+          onClick={() => handleChangeQuantity(1)}
+        >+</button>
       </div>
 
       <p className={s.price}>{price * quantity}&nbsp;₽</p>
