@@ -1,13 +1,14 @@
 import { useDispatch } from 'react-redux';
 import { API_URL } from '../../const.js';
 import s from './CartItem.module.scss';
-import { addItemToCart } from '../../redux/cartSlice.js';
+import { addItemToCart, calculateCartTotalPrice } from '../../redux/cartSlice.js';
 
 export const CartItem = ({id, photoUrl, name, price, quantity}) => {
   const dispatch = useDispatch();
 
   const handleChangeQuantity = (n) => {
-    dispatch(addItemToCart({productId: id, quantity: quantity += n}))
+    dispatch(addItemToCart({productId: id, quantity: quantity += n}));
+    dispatch(calculateCartTotalPrice());
   };
 
   return (

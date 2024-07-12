@@ -41,7 +41,7 @@ export const addItemToCart = createAsyncThunk('cart/addItemToCart',
     if (!response.ok) {
       throw new Error('Не удалось добавить товар в корзину');
     }
-
+    
     return await response.json();
   },
 );
@@ -49,6 +49,7 @@ export const addItemToCart = createAsyncThunk('cart/addItemToCart',
 const initialState = {
   isOpen: false,
   items: [],
+  total: 0,
   status: 'idle',
   accessKey: null,
   error: null,
@@ -61,6 +62,9 @@ const cartSlice = createSlice({
     toggleCart(state) {
       state.isOpen = !state.isOpen;
     },
+    calculateCartTotalPrice(state) {
+      state.total = state.items.reduce((acc, item) => acc + item.price, 0);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,6 +105,6 @@ const cartSlice = createSlice({
   }
 });
 
-export const {toggleCart} = cartSlice.actions;
+export const {toggleCart, calculateCartTotalPrice} = cartSlice.actions;
 
 export default cartSlice.reducer;

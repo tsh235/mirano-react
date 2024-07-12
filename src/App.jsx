@@ -7,7 +7,7 @@ import { Footer } from './modules/Footer/Footer.jsx';
 import { Order } from './modules/Order/Order.jsx';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchCart, registerCart } from './redux/cartSlice.js';
+import { calculateCartTotalPrice, fetchCart, registerCart } from './redux/cartSlice.js';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,9 @@ export const App = () => {
       await dispatch(registerCart());
       await dispatch(fetchCart());
     };
-
+    
     initializeCart();
+    dispatch(calculateCartTotalPrice());
   }, [dispatch]);
   
   return (
