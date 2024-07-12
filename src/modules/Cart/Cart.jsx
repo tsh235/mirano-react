@@ -11,8 +11,10 @@ export const Cart = () => {
   const isOpen = useSelector(state => state.cart.isOpen);
   const {items, total} = useSelector(state => state.cart);
 
-  dispatch(calculateCartTotalPrice());
-  
+  if (isOpen) {
+    dispatch(calculateCartTotalPrice());
+  }
+
   const cartRef = useRef(null);
   
   useEffect(() => {
