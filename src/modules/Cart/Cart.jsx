@@ -11,10 +11,6 @@ export const Cart = () => {
   const isOpen = useSelector(state => state.cart.isOpen);
   const {items, total} = useSelector(state => state.cart);
 
-  if (isOpen) {
-    dispatch(calculateCartTotalPrice());
-  }
-
   const cartRef = useRef(null);
   
   useEffect(() => {
@@ -22,6 +18,10 @@ export const Cart = () => {
       cartRef.current.scrollIntoView({ behavior: 'smooth'});
     }
   }, [dispatch, isOpen]);
+
+  useEffect(() => {
+      dispatch(calculateCartTotalPrice());
+  }, [dispatch, items]);
   
   const handlerCartClose = () => {
     dispatch(toggleCart());
