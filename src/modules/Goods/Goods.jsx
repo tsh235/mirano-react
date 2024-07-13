@@ -39,9 +39,9 @@ export const Goods = ({title}) => {
   }
 
   if (goodsStatus === 'success' && !goods.length) {
-    // content = <p className='empty-search'>По вашему запросу ничего не найдено</p>
     content = (
       <div className="not-found">
+        <img src="./img/not-found.webp" alt="Ничего не найдено по запросу" width="160" height="163" />
         <p className="not-found__text">По вашему запросу ничего не найдено. Попробуйте изменить запрос.</p>
       </div>
     );

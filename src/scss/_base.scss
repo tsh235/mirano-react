@@ -146,19 +146,11 @@ input[type="number"]:focus {
 }
 
 .not-found {
-  // width: 100%;
-  // min-height: 70vh;
-  // display: flex;
-  // justify-content: center;
-  // align-items: end;
-  // background-image: url('/img/not-found.webp');
-  // background-position: top -40px center;
-  // background-size: 100%;
-  // background-repeat: no-repeat;
-
-  // @include laptop {
-  //   background-position: top -20px center;
-  // }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 
   &__text {
     margin: 0 auto;

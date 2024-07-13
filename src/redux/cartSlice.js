@@ -62,6 +62,9 @@ const cartSlice = createSlice({
     toggleCart(state) {
       state.isOpen = !state.isOpen;
     },
+    closeCart(state) {
+      state.isOpen = false;
+    },
     calculateCartTotalPrice(state) {
       state.total = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     }
@@ -106,6 +109,6 @@ const cartSlice = createSlice({
   }
 });
 
-export const {toggleCart, calculateCartTotalPrice} = cartSlice.actions;
+export const {toggleCart, calculateCartTotalPrice, closeCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

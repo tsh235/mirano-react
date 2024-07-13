@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './header.scss';
-import { toggleCart } from '../../redux/cartSlice.js';
+import { closeCart, toggleCart } from '../../redux/cartSlice.js';
 import { useState } from 'react';
 import { fetchGoods } from '../../redux/goodsSlice.js';
 import { changeType } from '../../redux/filtersSlice.js';
@@ -16,6 +16,7 @@ export const Header = ({setTitleGoods}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(closeCart());
     dispatch(fetchGoods({search: searchValue}));
     setSearchValue('');
     setTitleGoods('Результат поиска');
