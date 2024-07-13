@@ -63,8 +63,7 @@ const cartSlice = createSlice({
       state.isOpen = !state.isOpen;
     },
     calculateCartTotalPrice(state) {
-      state.total = state.items.reduce((acc, item) => acc + item.price, 0);
-      console.log('state.total: ', state.total);
+      state.total = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     }
   },
   extraReducers: (builder) => {
@@ -98,6 +97,7 @@ const cartSlice = createSlice({
       .addCase(addItemToCart.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
+        state.total = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = 'failed';
