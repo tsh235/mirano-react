@@ -1,6 +1,6 @@
 // rxslice и таб раскрывает структуру
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { clearCart, closeCart, fetchCart } from './cartSlice.js';
+import { closeCart, fetchCart } from './cartSlice.js';
 import { API_URL } from '../const.js';
 
 export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState, dispatch}) => {
@@ -47,7 +47,6 @@ export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState
 
   dispatch(clearOrder());
   dispatch(closeCart());
-  dispatch(clearCart());
   dispatch(fetchCart());
 
   return await response.json();
