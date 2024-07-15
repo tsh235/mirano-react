@@ -65,9 +65,9 @@ const cartSlice = createSlice({
     closeCart(state) {
       state.isOpen = false;
     },
-    calculateCartTotalPrice(state) {
-      state.total = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    }
+    clearCart(state) {
+      state.items = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -100,7 +100,6 @@ const cartSlice = createSlice({
       .addCase(addItemToCart.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
-        state.total = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = 'failed';
@@ -109,6 +108,6 @@ const cartSlice = createSlice({
   }
 });
 
-export const {toggleCart, calculateCartTotalPrice, closeCart} = cartSlice.actions;
+export const {toggleCart, closeCart, clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

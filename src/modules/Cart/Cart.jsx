@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem.jsx';
 import './cart.scss';
-import { calculateCartTotalPrice, toggleCart } from '../../redux/cartSlice.js';
+import { toggleCart } from '../../redux/cartSlice.js';
 import { openModal } from '../../redux/orderSlice.js';
 import { useEffect, useRef } from 'react';
 
@@ -9,12 +9,11 @@ export const Cart = () => {
   const dispatch = useDispatch();
   
   const isOpen = useSelector(state => state.cart.isOpen);
-  const {items, total} = useSelector(state => state.cart);
+  const {items} = useSelector(state => state.cart);
   
   const cartRef = useRef(null);
   
   useEffect(() => {
-    dispatch(calculateCartTotalPrice());
     if (isOpen) {
       cartRef.current.scrollIntoView({ behavior: 'smooth'});
     }
@@ -50,8 +49,8 @@ export const Cart = () => {
         </ul>
   
         <div className="cart__footer">
-          <button className="cart__order-btn" onClick={handlerOrderOpen}>Оформить</button>
-          <p className="cart__price cart__price_total">{total}&nbsp;₽</p>
+          <button className="cart__order-btn" onClick={handlerOrderOpen} disabled={!items.length}>Оформить</button>
+          <p className="cart__price cart__price_total">{items.reduce((acc, item) => acc + (item.price * item.quantity), 0)}&nbsp;₽</p>
         </div>
       </div>
     </section>

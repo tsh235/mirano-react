@@ -4,8 +4,9 @@ import './filter.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../redux/goodsSlice.js';
 import { debounce, getValidFilters } from '../../util.js';
-import { changeType, changePrice } from '../../redux/filtersSlice.js';
+import { changeType, changePrice, changeCategory } from '../../redux/filtersSlice.js';
 import { FilterRadio } from './FilterRadio.jsx';
+import classNames from 'classnames';
 
 const filterTypes = [
   {value: 'bouquets', title: 'Цветы'},
@@ -13,11 +14,12 @@ const filterTypes = [
   {value: 'postcards', title: 'Открытки'},
 ];
 
-export const Filter = ({setTitleGoods}) => {
+export const Filter = ({setTitleGoods, filterRef}) => {
   const dispatch = useDispatch();
   
   const [openChoice, setOpenChoice] = useState(null);
   const filters = useSelector(state => state.filters);
+  const categories = useSelector(state => state.goods.categories);
   const prevFiltersRef = useRef({});
 
   const debouncedFetchGoods = useRef(
@@ -60,8 +62,13 @@ export const Filter = ({setTitleGoods}) => {
     dispatch(changePrice({name, value}));
   };
 
+  const handleCategoryChange = (category) => {
+    dispatch(changeCategory(category));
+    setOpenChoice(-1);
+  }
+
   return (
-    <section className="filter">
+    <section className="filter" ref={filterRef}>
       <h2 className="visually-hidden">Фильтр</h2>
       <div className="container">
         <form className="filter__form">
@@ -97,23 +104,33 @@ export const Filter = ({setTitleGoods}) => {
               </fieldset>
             </Choices>
 
-            <Choices
-              buttonLabel="Тип товара"
-              isOpen={openChoice === 1}
-              onToggle={() => handleChoicesToggle(1)}
-            >
-              <ul className="filter__type-list">
-                <li className="filter__type-item">
-                  <button className="filter__type-btn" type="button">Монобукеты</button>
-                </li>
-                <li className="filter__type-item">
-                  <button className="filter__type-btn" type="button">Авторские букеты</button>
-                </li>
-                <li className="filter__type-item">
-                  <button className="filter__type-btn" type="button">Цветы в корзине</button>
-                </li>
-              </ul>
-            </Choices>
+            {categories.length ? (
+              <Choices
+                buttonLabel="Тип товара"
+                isOpen={openChoice === 1}
+                onToggle={() => handleChoicesToggle(1)}
+              >
+                <ul className="filter__type-list">
+                  <li className="filter__type-item">
+                    <button
+                      className="filter__type-btn"
+                      type="button"
+                      onClick={() => handleCategoryChange('')}
+                    >Все типы товара</button>
+                    </li>
+                  {categories.map(category => (
+                    <li key={category} className="filter__type-item">
+                      <button
+                        className={classNames('filter__type-btn', category === filters.category ? 'filter__type-btn_active' : '')}
+                        type="button"
+                        onClick={() => handleCategoryChange(category)}
+                      >{category}</button>
+                    </li>
+                  ))}
+                </ul>
+              </Choices>
+            ) : null}
+
           </fieldset>
         </form>
       </div>

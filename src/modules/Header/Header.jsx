@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { fetchGoods } from '../../redux/goodsSlice.js';
 import { changeType } from '../../redux/filtersSlice.js';
 
-export const Header = ({setTitleGoods}) => {
+export const Header = ({setTitleGoods, scrollToFilter}) => {
   const dispatch = useDispatch();
-  const counterCartItems = useSelector(state => state.cart.items);
+  const cartItems = useSelector(state => state.cart.items);
   const [searchValue, setSearchValue] = useState('');
 
   const handlerCartToogle = () => {
@@ -21,9 +21,10 @@ export const Header = ({setTitleGoods}) => {
     setSearchValue('');
     setTitleGoods('Результат поиска');
     dispatch(changeType(''));
+    scrollToFilter();
   };
 
-  const handleCartQuantity = () => counterCartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const handleCartQuantity = () => cartItems.reduce((acc, item) => acc + item.quantity, 0);
   
   return (
     <header className="header">

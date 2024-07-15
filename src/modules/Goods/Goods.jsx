@@ -4,15 +4,9 @@ import { Card } from '../Card/Card.jsx';
 import { Cart } from '../Cart/Cart.jsx';
 import { useSelector } from 'react-redux';
 import { API_URL } from '../../const.js';
-import { useRef } from 'react';
 
 export const Goods = ({title}) => {
   const {items: goods, status: goodsStatus, error} = useSelector(state => state.goods);
-  const goodsRef = useRef(null);
-
-  if (title === 'Результат поиска') {
-    goodsRef.current.scrollIntoView({ behavior: 'smooth'});
-  }
 
   let content = null;
 
@@ -52,7 +46,7 @@ export const Goods = ({title}) => {
   }
 
   return (
-    <section className="goods" ref={goodsRef}>
+    <section className="goods">
       <div className="container">
         <h2 className="goods__title section-title">{title}</h2>
   
