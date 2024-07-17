@@ -3,7 +3,7 @@ import { Choices } from '../Choices/Choices.jsx';
 import './filter.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../redux/goodsSlice.js';
-import { debounce, getValidFilters } from '../../util.js';
+import { debounce, getValidFilters, isNumber } from '../../util.js';
 import { changeType, changePrice, changeCategory } from '../../redux/filtersSlice.js';
 import { FilterRadio } from './FilterRadio.jsx';
 import classNames from 'classnames';
@@ -14,33 +14,63 @@ const filterTypes = [
   {value: 'postcards', title: 'Открытки'},
 ];
 
-export const Filter = ({setTitleGoods, filterRef}) => {
+export const Filter = ({setTitleGoods}) => {
   const dispatch = useDispatch();
   
-  const [openChoice, setOpenChoice] = useState(null);
   const filters = useSelector(state => state.filters);
   const categories = useSelector(state => state.goods.categories);
-  const prevFiltersRef = useRef({});
+  
+  const [openChoice, setOpenChoice] = useState(null);
+
+  const filterRef = useRef(null);
+  const prevFiltersRef = useRef(filters);
 
   const debouncedFetchGoods = useRef(
     debounce((filters) => {
       dispatch(fetchGoods(filters));
     }, 500),
   ).current;
+
+  useEffect(() => {
+    if (filters.search) {
+      filterRef.current.scrollIntoView({ behavior: 'smooth'});
+    }
+  }, [filters]);
+
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('.filter__group_choices');
+
+      if (!target && (openChoice !== null || openChoice !== -1)) {
+        setOpenChoice(-1);
+      }
+    })
+  }, [openChoice])
   
   useEffect(() => {
-    const prevFilters = prevFiltersRef.current;
+    const prevMinPrice = prevFiltersRef.current.minPrice;
+    const prevMaxPrice = prevFiltersRef.current.maxPrice;
+
     const validFilters = getValidFilters(filters);
 
-    if (!validFilters.type) {
+    if (!validFilters.type && !validFilters.search) {
       return;
     }
 
-    if (prevFilters.type !== validFilters.type) {
-      dispatch(fetchGoods(validFilters));
-      setTitleGoods(filterTypes.find(item => item.value === validFilters.type).title);
-    } else {
+    if (prevMinPrice !== filters.minPrice || prevMaxPrice !== filters.maxPrice) {
       debouncedFetchGoods(validFilters);
+    } else {
+      dispatch(fetchGoods(validFilters));
+
+      const type = filterTypes.find(item => item.value === validFilters.type);
+
+      if (type) {
+        setTitleGoods(type.title);
+      } 
+
+      if (validFilters.search) {
+        setTitleGoods('Результат поиска');
+      }
     }
 
     prevFiltersRef.current = filters;
@@ -57,15 +87,17 @@ export const Filter = ({setTitleGoods, filterRef}) => {
     setOpenChoice(-1);
   };
 
-  const handleChangePrice = ({target}) => {
-    const {name, value} = target;
-    dispatch(changePrice({name, value}));
+  const handleChangePrice = (e) => {
+    if (isNumber(e.nativeEvent.data) || e.nativeEvent.data === null) {
+      const {name, value} = e.target;
+      dispatch(changePrice({name, value}));
+    }
   };
 
   const handleCategoryChange = (category) => {
     dispatch(changeCategory(category));
     setOpenChoice(-1);
-  }
+  };
 
   return (
     <section className="filter" ref={filterRef}>

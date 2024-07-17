@@ -3,59 +3,67 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { closeCart, fetchCart } from './cartSlice.js';
 import { API_URL } from '../const.js';
 
-export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState, dispatch}) => {
-  const {order: {data: {
-    buyerName,
-    buyerPhone,
-    recipientName,
-    recipientPhone,
-    street,
-    house,
-    apartment,
-    paymentOnline,
-    deliveryDate,
-    deliveryTime,
-  }}} = getState();
+export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState, dispatch, rejectWhithValue}) => {
+  try {
+    const {order: {data: {
+      buyerName,
+      buyerPhone,
+      recipientName,
+      recipientPhone,
+      street,
+      house,
+      apartment,
+      paymentOnline,
+      deliveryDate,
+      deliveryTime,
+    }}} = getState();
+  
+    const orderData = {
+      buyer: {
+        name: buyerName,
+        phone: buyerPhone,
+      },
+      recipient: {
+        name: recipientName,
+        phone: recipientPhone,
+      },
+      address: `${street}, ${house}, ${apartment}`,
+      paymentOnline: paymentOnline,
+      deliveryDate,
+      deliveryTime,
+    };
+  
+    const response = await fetch(`${API_URL}/api/orders`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData),
+    });
+  
+    if (!response.ok) {
+      throw new Error('Не удалось ооформить заказ!');
+    }
+  
+    const data =  await response.json();
 
-  const orderData = {
-    buyer: {
-      name: buyerName,
-      phone: buyerPhone,
-    },
-    recipient: {
-      name: recipientName,
-      phone: recipientPhone,
-    },
-    address: `${street}, ${house}, ${apartment}`,
-    paymentOnline: paymentOnline,
-    deliveryDate,
-    deliveryTime,
-  };
+    dispatch(clearOrder());
+    dispatch(closeCart());
+    dispatch(fetchCart());
 
-  const response = await fetch(`${API_URL}/api/orders`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(orderData),
-  });
-
-  if (!response.ok) {
-    throw new Error('Не удалось отправить заказ');
+    return data;
+  
+  } catch (error) {
+    return rejectWhithValue(error.message);
   }
-
-  dispatch(clearOrder());
-  dispatch(closeCart());
-  dispatch(fetchCart());
-
-  return await response.json();
 });
 
 const initialState = {
   isOpen: false,
   orderId: '',
   status: 'idle',
+  error: null,
   data: {
     buyerName: '',
     buyerPhone: '',
@@ -100,17 +108,19 @@ const orderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder // ! Todo
+    builder
       .addCase(sendOrder.pending, (state) => {
-        state.status = 'sending';
+        state.orderId = '';
+        state.status = 'loading';
       })
       .addCase(sendOrder.fulfilled, (state, action) => {
-        state.status = 'success';
         state.orderId = action.payload.orderId;
+        state.status = 'success';
       })
       .addCase(sendOrder.rejected, (state, action) => {
+        state.orderId = '';
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
   }
 });

@@ -9,7 +9,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   
   const isOpen = useSelector(state => state.cart.isOpen);
-  const {items} = useSelector(state => state.cart);
+  const cartItems = useSelector(state => state.cart.items);
   
   const cartRef = useRef(null);
   
@@ -17,7 +17,7 @@ export const Cart = () => {
     if (isOpen) {
       cartRef.current.scrollIntoView({ behavior: 'smooth'});
     }
-  }, [dispatch, isOpen]);
+  }, [isOpen]);
   
   const handlerCartClose = () => {
     dispatch(toggleCart());
@@ -45,12 +45,12 @@ export const Cart = () => {
         <p className="cart__date-delivery">сегодня в 14:00</p>
   
         <ul className="cart__list">
-          {items.map(item => <CartItem key={item.id} {...item} />)}
+          {cartItems.map(item => <CartItem key={item.id} {...item}/>)}
         </ul>
   
         <div className="cart__footer">
-          <button className="cart__order-btn" onClick={handlerOrderOpen} disabled={!items.length}>Оформить</button>
-          <p className="cart__price cart__price_total">{items.reduce((acc, item) => acc + (item.price * item.quantity), 0)}&nbsp;₽</p>
+          <button className="cart__order-btn" onClick={handlerOrderOpen} disabled={!cartItems.length}>Оформить</button>
+          <p className="cart__price cart__price_total">{cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)}&nbsp;₽</p>
         </div>
       </div>
     </section>

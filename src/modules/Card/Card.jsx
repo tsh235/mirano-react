@@ -1,13 +1,17 @@
 import classNames from 'classnames';
 import './card.scss';
-import { useDispatch } from 'react-redux';
-import { addItemToCart } from '../../redux/cartSlice.js';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, toggleCart } from '../../redux/cartSlice.js';
+import { useEffect, useRef, useState } from 'react';
 
 export const Card = ({className, id, img, title, dateDelivery, price}) => {
   const dispatch = useDispatch();
+  const isOpenCart = useSelector(state => state.cart.isOpen);
+  const cartItems = useSelector(state => state.cart.items);
 
   const [btnText, setBtnText] = useState(`${price}\u00A0₽`);
+
+  const addBtnToCartRef = useRef(null);
   
   const handleMouseEnter = () => {
     setBtnText('В корзину');
@@ -18,8 +22,27 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
   };
   
   const handleAddToCart = () => {
-    dispatch(addItemToCart({productId: id, quantity: 1}));
+    dispatch(addItemToCart({productId: id}));
+    
+    if (!isOpenCart) {
+      dispatch(toggleCart());
+    }
   };
+  
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      const isInCart = cartItems.find(item => item.id === id);
+      
+      const currentId = addBtnToCartRef.current.dataset.id;
+
+      if (isInCart && isInCart.id === +currentId) {
+        setBtnText('В корзине');
+        addBtnToCartRef.current.disabled = 'true';
+      } else {
+        // addBtnToCartRef.current.disabled = 'false';
+      }
+    }
+  }, [cartItems, id])
 
   return (
     <article className={classNames(className, 'card')}>
@@ -28,7 +51,17 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
         <h3 className="card__title">{title}</h3>
         <div className="card__footer">
           <p className="card__date-delivery">{dateDelivery}</p>
-          <button className="card__btn" onClick={handleAddToCart} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{btnText}</button>
+
+          <button
+            className="card__btn"
+            data-id={id}
+            onClick={handleAddToCart}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            ref={addBtnToCartRef}
+          >
+            {btnText}
+          </button>
         </div>
       </div>
     </article>

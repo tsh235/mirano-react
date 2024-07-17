@@ -3,26 +3,35 @@ import { API_URL } from '../../const.js';
 import s from './CartItem.module.scss';
 import { addItemToCart } from '../../redux/cartSlice.js';
 import { useState } from 'react';
-import { debounce } from '../../util.js';
+import { debounce, isNumber } from '../../util.js';
 
 export const CartItem = ({id, photoUrl, name, price, quantity}) => {
   const dispatch = useDispatch();
   const [inputQuantity, setInputQuantity] = useState(quantity);
 
   const debounceInputChange = debounce((newQuantity) => {
-    dispatch(addItemToCart({productId: id, quantity: newQuantity}));
+    if (isNumber(newQuantity)) {
+      dispatch(addItemToCart({productId: id, quantity: newQuantity}));
+    }
   }, 500);
+  
+  const handleChangeInput = (e) => {
+    const newQuantity = parseInt(e.target.value);
+    setInputQuantity(newQuantity);
+    debounceInputChange(newQuantity);
+  };
 
-  const handleChangeQuantity = (n) => {
-    const newQuantity = inputQuantity + n;
+  const handleDecrement = () => {
+    const newQuantity = inputQuantity - 1 > 0 ? inputQuantity - 1 : 0;
+    
     setInputQuantity(newQuantity);
     dispatch(addItemToCart({productId: id, quantity: newQuantity}));
   };
 
-  const handleChangeInput = ({target}) => {
-    const newQuantity = parseInt(target.value);
+  const handleIncrement = () => {
+    const newQuantity = inputQuantity + 1;
     setInputQuantity(newQuantity);
-    debounceInputChange(newQuantity);
+    dispatch(addItemToCart({productId: id, quantity: newQuantity}));
   };
   
   return (
@@ -32,14 +41,11 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
       <h4 className={s.title}>{name}</h4>
 
       <div className={s.counter}>
-        <button
-          className={s.btn}
-          onClick={() => handleChangeQuantity(-1)}
-        >-</button>
+        <button className={s.btn} onClick={handleDecrement}>-</button>
 
         <input
           className={s.input}
-          type="number"
+          type="text"
           name="count"
           min="0"
           max="99"
@@ -47,13 +53,10 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
           onChange={handleChangeInput}
         />
         
-        <button
-          className={s.btn}
-          onClick={() => handleChangeQuantity(1)}
-        >+</button>
+        <button className={s.btn} onClick={handleIncrement}>+</button>
       </div>
 
-      <p className={s.price}>{price * inputQuantity}&nbsp;₽</p>
+      <p className={s.price}>{inputQuantity ? price * inputQuantity : 0}&nbsp;₽</p>
     </li>
   )
 };

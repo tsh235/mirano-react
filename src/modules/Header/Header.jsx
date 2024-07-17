@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './header.scss';
 import { closeCart, toggleCart } from '../../redux/cartSlice.js';
-import { useState } from 'react';
-import { fetchGoods } from '../../redux/goodsSlice.js';
-import { changeType } from '../../redux/filtersSlice.js';
+import { useRef, useState } from 'react';
+import { changeSearch } from '../../redux/filtersSlice.js';
 
-export const Header = ({setTitleGoods, scrollToFilter}) => {
+export const Header = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.items);
   const [searchValue, setSearchValue] = useState('');
+  const searchInputRef = useRef(null);
 
   const handlerCartToogle = () => {
     dispatch(toggleCart());
@@ -16,12 +16,20 @@ export const Header = ({setTitleGoods, scrollToFilter}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(closeCart());
-    dispatch(fetchGoods({search: searchValue}));
-    setSearchValue('');
-    setTitleGoods('Результат поиска');
-    dispatch(changeType(''));
-    scrollToFilter();
+    if (searchValue.trim() !== '') {
+      searchInputRef.current.style.cssText = '';
+      dispatch(closeCart());
+      dispatch(changeSearch(searchValue));
+      setSearchValue('');
+
+    } else {
+      searchInputRef.current.style.cssText = `
+        border-color: tomato;
+      `;
+      setTimeout(() => {
+        searchInputRef.current.style.cssText = '';
+      }, 2000)
+    }
   };
 
   const handleCartQuantity = () => cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -33,6 +41,7 @@ export const Header = ({setTitleGoods, scrollToFilter}) => {
           <input className="header__input" type="search" name="search" placeholder="Букет из роз"
             value={searchValue}
             onChange={({target}) => setSearchValue(target.value)}
+            ref={searchInputRef}
           />
           <button className="header__search-btn" aria-label="Найти">
             <svg className="header__search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
