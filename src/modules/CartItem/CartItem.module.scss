@@ -57,6 +57,12 @@
   outline: 1px solid transparent;
   border-radius: 4px;
 
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
   &:hover, &:focus-visible {
     outline-color: $light-orange;
   }

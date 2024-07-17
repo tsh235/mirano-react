@@ -45,7 +45,7 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
 
         <input
           className={s.input}
-          type="text"
+          type="number"
           name="count"
           min="0"
           max="99"
