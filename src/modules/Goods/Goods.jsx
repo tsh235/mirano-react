@@ -25,7 +25,8 @@ export const Goods = ({title}) => {
               img={`${API_URL}${item.photoUrl}`}
               title={item.name}
               dateDelivery='сегодня в 14:00'
-              price={item.price}/>
+              price={item.price}
+            />
           </li>
         ))}
       </ul>

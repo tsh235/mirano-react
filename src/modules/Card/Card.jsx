@@ -38,11 +38,9 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
       if (isInCart && isInCart.id === +currentId) {
         setBtnText('В корзине');
         addBtnToCartRef.current.disabled = 'true';
-      } else {
-        // addBtnToCartRef.current.disabled = 'false';
       }
     }
-  }, [cartItems, id])
+  }, [cartItems, id]);
 
   return (
     <article className={classNames(className, 'card')}>
