@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { API_URL } from '../../const.js';
 import s from './CartItem.module.scss';
 import { addItemToCart } from '../../redux/cartSlice.js';
@@ -8,8 +8,6 @@ import { debounce, isNumber } from '../../util.js';
 export const CartItem = ({id, photoUrl, name, price, quantity}) => {
   const dispatch = useDispatch();
   const [inputQuantity, setInputQuantity] = useState(quantity);
-
-  const goods = useSelector(state => state.goods.items);
 
   const debounceInputChange = debounce((newQuantity) => {
     if (isNumber(newQuantity)) {
@@ -38,18 +36,16 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
 
   useEffect(() => {
     if (inputQuantity < 1) {
-      const currentCard = goods.find(item => id === item.id);
-
       const btns = document.querySelectorAll('[data-id]');
 
       btns.forEach(btn => {
         if (parseInt(btn.dataset.id) === id) {
-          btn.textContent = `${currentCard.price}\u00A0₽`;
+          btn.textContent = `${price}\u00A0₽`;
           btn.disabled = '';
         }
       })
     }
-  }, [goods, inputQuantity, id]);
+  }, [inputQuantity, id, price]);
   
   return (
     <li className={s.item}>
