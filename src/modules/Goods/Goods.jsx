@@ -4,9 +4,12 @@ import { Card } from '../Card/Card.jsx';
 import { Cart } from '../Cart/Cart.jsx';
 import { useSelector } from 'react-redux';
 import { API_URL } from '../../const.js';
+import { getDeliveryDate } from '../../util.js';
 
 export const Goods = ({title}) => {
   const {items: goods, status: goodsStatus, error} = useSelector(state => state.goods);
+
+  const dateDelivery = getDeliveryDate();
 
   let content = null;
 
@@ -24,7 +27,7 @@ export const Goods = ({title}) => {
               id={item.id}
               img={`${API_URL}${item.photoUrl}`}
               title={item.name}
-              dateDelivery='сегодня в 14:00'
+              dateDelivery={dateDelivery}
               price={item.price}
             />
           </li>

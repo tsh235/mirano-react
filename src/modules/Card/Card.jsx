@@ -24,7 +24,7 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
   const handleAddToCart = () => {
     dispatch(addItemToCart({productId: id}));
     
-    if (!isOpenCart) {
+    if (window.innerWidth > 768 && !isOpenCart) {
       dispatch(toggleCart());
     }
   };

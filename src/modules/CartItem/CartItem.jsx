@@ -16,7 +16,7 @@ export const CartItem = ({id, photoUrl, name, price, quantity}) => {
   }, 500);
   
   const handleChangeInput = (e) => {
-    const newQuantity = parseInt(e.target.value);
+    const newQuantity = !isNaN(parseInt(e.target.value)) ? parseInt(e.target.value) : '';
     setInputQuantity(newQuantity);
     debounceInputChange(newQuantity);
   };

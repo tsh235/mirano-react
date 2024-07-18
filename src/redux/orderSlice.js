@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { closeCart, fetchCart } from './cartSlice.js';
 import { API_URL } from '../const.js';
+import { formatDate } from '../util.js';
 
 export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState, dispatch, rejectWhithValue}) => {
   try {
@@ -59,6 +60,8 @@ export const sendOrder = createAsyncThunk('order/sendOrder', async (_, {getState
   }
 });
 
+const deliveryDate = formatDate();
+
 const initialState = {
   isOpen: false,
   orderId: '',
@@ -73,7 +76,7 @@ const initialState = {
     house: '',
     apartment: '',
     paymentOnline: 'true',
-    deliveryDate: '',
+    deliveryDate: deliveryDate,
     deliveryTime: '',
   },
 };

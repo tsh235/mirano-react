@@ -51,3 +51,35 @@ export const adjustElemPosition = (elem, count = 0) => {
     adjustElemPosition(elem, ++count);
   }
 };
+
+export const getDeliveryDate = () => {
+  const currentTime = new Date();
+  const startTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 9, 0, 0);
+  const endTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 21, 0, 0);
+  // const newCurrentTime = new Date(currentTime.getTime() + (3 * 60 * 60 * 1000));
+
+  let dateDelivery = '';
+
+  if (startTime <= currentTime && currentTime <= endTime) {
+    dateDelivery = 'сегодня до 21:00';
+  } else {
+    if (currentTime < startTime) {
+      dateDelivery = 'сегодня с 09:00';
+    }
+
+    if (currentTime > endTime) {
+      dateDelivery = 'завтра с 09:00';
+    }
+  }
+
+  return dateDelivery;
+};
+
+export const formatDate = () => {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+};

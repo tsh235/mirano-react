@@ -8,6 +8,7 @@ export const Order = () => {
   const dispatch = useDispatch();
   const itemsCart = useSelector(state => state.cart.items);
   const {isOpen, orderId, data: orderData} = useSelector(state => state.order);
+  console.log('orderData: ', orderData.deliveryDate);
 
   // можно через классы, только в модульной системе scss 
   // нужно будет писать так: if (target.matches(`.${s.order}`) || target.closest(`.${s.close}`))
@@ -75,6 +76,7 @@ export const Order = () => {
                     placeholder="Имя"
                     value={orderData.buyerName}
                     onChange={handleChange}
+                    required
                   />
                   <input
                     className={s.input}
@@ -83,6 +85,7 @@ export const Order = () => {
                     placeholder="Телефон"
                     value={orderData.buyerPhone}
                     onChange={handleChange}
+                    required
                   />
                 </div>
               </fieldset>
@@ -146,7 +149,7 @@ export const Order = () => {
 
               <fieldset className={s.fieldset}>
                 <div className={s.payment}>
-                  <label className={s['label-radio']}>
+                  <label className={s["label-radio"]}>
                     <input
                       className={s.radio}
                       type="radio"
@@ -160,18 +163,19 @@ export const Order = () => {
                 </div>
 
                 <div className={s.delivery}>
-                  <label className="delivery">Доставка доставки</label>
+                  <label className="delivery">Дата доставки</label>
                   <input
                     className={s.input}
                     type="date"
                     name="deliveryDate"
-                    value={orderData.deliveryDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    defaultValue={orderData.deliveryDate}
                     onChange={handleChange}
                     required
                   />
 
                   <label className="delivery">Время доставки</label>
-                  <div className={s['select-wrapper']}>
+                  <div className={s["select-wrapper"]}>
                     <select
                       className={s.select}
                       name="deliveryTime"

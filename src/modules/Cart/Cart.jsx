@@ -4,9 +4,12 @@ import './cart.scss';
 import { toggleCart } from '../../redux/cartSlice.js';
 import { openModal } from '../../redux/orderSlice.js';
 import { useEffect, useRef } from 'react';
+import { getDeliveryDate } from '../../util.js';
 
 export const Cart = () => {
   const dispatch = useDispatch();
+
+  const dateDelivery = getDeliveryDate();
   
   const isOpen = useSelector(state => state.cart.isOpen);
   const cartItems = useSelector(state => state.cart.items);
@@ -42,7 +45,7 @@ export const Cart = () => {
           </button>
         </div>
   
-        <p className="cart__date-delivery">сегодня в 14:00</p>
+        <p className="cart__date-delivery">{dateDelivery}</p>
   
         <ul className="cart__list">
           {cartItems.map(item => <CartItem key={item.id} {...item}/>)}
