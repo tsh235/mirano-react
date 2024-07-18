@@ -69,7 +69,6 @@ export const Order = () => {
   }, [isOpen, handleClose]);
 
   const [intervals, setIntervals] = useState([]);
-  console.log('intervals: ', intervals);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -85,10 +84,23 @@ export const Order = () => {
       setIntervals(['18-21']);
     } else {
       setIntervals(['9-12', '12-15', '15-18', '18-21']);
-      console.log('Все');
     }
 
   }, [orderData.deliveryDate, orderData]);
+
+  const array = [];
+  
+  const getOptions = () => {
+    intervals.forEach(item => {
+      Object.entries(orderInterval).map(
+        ([key, value]) => {
+          if (key === item) array.push([key, value]);
+        }
+      )
+    });
+  }
+    
+  getOptions();
 
   if (!isOpen) return null;
   
@@ -223,17 +235,7 @@ export const Order = () => {
                       onChange={handleChange}
                       required
                     >
-                      {
-                        intervals.forEach(item => {
-                          Object.entries(orderInterval).map(
-                            ([key, value]) => {
-                              if (key === item) {
-                                return <option key={Math.random()} value={key}>{value}</option>
-                              }
-                            }
-                          )
-                        })
-                      }
+                      {array.map((item) => <option key={Math.random()} value={item[0]}>{item[1]}</option>)}
                     </select>
                   </div>
                 </div>
