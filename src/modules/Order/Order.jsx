@@ -103,6 +103,7 @@ export const Order = () => {
         {orderId ?
           <>
             <h2 className={s.title}>Заказ оформлен</h2>
+            <img className={s.image} src="./img/order-bouquet.webp" alt="bouquet" />
             <p className={s.success}>Номер заказа: {orderId}</p>
           </>
           :

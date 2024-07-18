@@ -16,7 +16,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   max-width: 624px;
   padding: 60px 32px;
   border-radius: 32px;
@@ -37,6 +37,12 @@
   @include mobile {
     font-size: 20px;
   }
+}
+
+.image {
+  margin: 0 auto;
+  width: 160px;
+  height: 160px;
 }
 
 .form {
