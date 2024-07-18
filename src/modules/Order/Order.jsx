@@ -10,6 +10,8 @@ export const Order = () => {
   const itemsCart = useSelector(state => state.cart.items);
   const {isOpen, orderId, data: orderData, times: orderInterval} = useSelector(state => state.order);
 
+  const [intervals, setIntervals] = useState([]);
+
   // можно через классы, только в модульной системе scss 
   // нужно будет писать так: if (target.matches(`.${s.order}`) || target.closest(`.${s.close}`))
   // const handlerClose = ({target}) => {
@@ -68,8 +70,6 @@ export const Order = () => {
     }
   }, [isOpen, handleClose]);
 
-  const [intervals, setIntervals] = useState([]);
-
   useEffect(() => {
     const currentDate = new Date();
     const formatedCurrentDate = formatDate(currentDate);
@@ -83,7 +83,7 @@ export const Order = () => {
     } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(18, 21)) {
       setIntervals(['18-21']);
     } else {
-      setIntervals(['9-12', '12-15', '15-18', '18-21']);
+      setIntervals([]);
     }
 
   }, [orderData.deliveryDate, orderData]);
