@@ -65,13 +65,13 @@ export const Order = () => {
   useEffect(() => {
     const currentDate = formatDate();
 
-    if (deliveryDate > currentDate || (deliveryDate === currentDate && getTimeInterval(0, 12))) {
+    if (deliveryDate > currentDate || (deliveryDate === currentDate && getTimeInterval(0, 9))) {
       setIntervals(['9-12', '12-15', '15-18', '18-21']);
-    } else if (deliveryDate === currentDate && getTimeInterval(12, 15)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(9, 12)) {
       setIntervals(['12-15', '15-18', '18-21']);
-    } else if (deliveryDate === currentDate && getTimeInterval(15, 18)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(12, 15)) {
       setIntervals(['15-18', '18-21']);
-    } else if (deliveryDate === currentDate && getTimeInterval(18, 21)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(15, 18)) {
       setIntervals(['18-21']);
     } else {
       const newDate = (new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()).replace(/^([^T]+)T(.+)$/,'$1');

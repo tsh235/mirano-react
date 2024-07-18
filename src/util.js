@@ -55,7 +55,7 @@ export const adjustElemPosition = (elem, count = 0) => {
 export const getDeliveryDate = () => {
   const currentTime = new Date();
   const startTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 9, 0, 0);
-  const endTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 21, 0, 0);
+  const endTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 18, 0, 0);
 
   let dateDelivery = '';
 
