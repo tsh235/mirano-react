@@ -88,13 +88,13 @@ export const Order = () => {
 
   }, [orderData.deliveryDate, orderData]);
 
-  const array = [];
+  const curretnIntervals = [];
   
   const getOptions = () => {
     intervals.forEach(item => {
       Object.entries(orderInterval).map(
         ([key, value]) => {
-          if (key === item) array.push([key, value]);
+          if (key === item) curretnIntervals.push([key, value]);
         }
       )
     });
@@ -235,7 +235,7 @@ export const Order = () => {
                       onChange={handleChange}
                       required
                     >
-                      {array.map((item) => <option key={Math.random()} value={item[0]}>{item[1]}</option>)}
+                      {curretnIntervals.map((item) => <option key={Math.random()} value={item[0]}>{item[1]}</option>)}
                     </select>
                   </div>
                 </div>
