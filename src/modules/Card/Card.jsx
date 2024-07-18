@@ -39,8 +39,11 @@ export const Card = ({className, id, img, title, dateDelivery, price}) => {
         setBtnText('В корзине');
         addBtnToCartRef.current.disabled = 'true';
       }
+    } else {
+      setBtnText(`${price}\u00A0₽`);
+      addBtnToCartRef.current.disabled = '';
     }
-  }, [cartItems, id]);
+  }, [cartItems, id, price]);
 
   return (
     <article className={classNames(className, 'card')}>
