@@ -24,7 +24,11 @@ export const Hero = () => (
           </clipPath>
 
           <foreignObject clipPath="url(#hero-center)" width="100%" height="100%">
-            <div className="hero__image-center"></div>
+            <picture>
+              <source srcSet="/img/hero-center@1x.avif 1x, /img/hero-center@2x.avif 2x" type="image/avif" />
+              <source srcSet="/img/hero-center@1x.webp 1x, /img/hero-center@2x.webp 2x" type="image/webp" />
+              <img src="/img/hero-center@1x.jpg" srcSet="/img/hero-center@2x.jpg 2x" alt="Букет цветов в вазе. В букете розовые хризантемы, розы, нежно розовые орхидеи и зеленые листья папоротника"/>
+            </picture>
           </foreignObject>
         </svg>
 
