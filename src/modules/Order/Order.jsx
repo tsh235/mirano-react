@@ -212,8 +212,8 @@ export const Order = () => {
                     className={s.input}
                     type="date"
                     name="deliveryDate"
-                    min={new Date().toISOString().split("T")[0]}
-                    defaultValue={deliveryDate}
+                    min={deliveryDate}
+                    value={deliveryDate}
                     onChange={handleChange}
                     required
                   />
