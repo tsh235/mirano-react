@@ -56,7 +56,6 @@ export const getDeliveryDate = () => {
   const currentTime = new Date();
   const startTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 9, 0, 0);
   const endTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), 21, 0, 0);
-  // const newCurrentTime = new Date(currentTime.getTime() + (3 * 60 * 60 * 1000));
 
   let dateDelivery = '';
 

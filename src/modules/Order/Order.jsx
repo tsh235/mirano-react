@@ -11,16 +11,8 @@ export const Order = () => {
   const {isOpen, orderId, data: orderData, times: orderInterval} = useSelector(state => state.order);
 
   const [intervals, setIntervals] = useState([]);
+  const [deliveryDate, setDeliveryDate] = useState(formatDate());
 
-  // можно через классы, только в модульной системе scss 
-  // нужно будет писать так: if (target.matches(`.${s.order}`) || target.closest(`.${s.close}`))
-  // const handlerClose = ({target}) => {
-  //   if (target.matches('.order') || target.closest('.order__close')) {
-  //     dispatch(closeModal());
-  //   }
-  // };
-
-  // а так, повесив события для элементов отдельно на каждый
   const handleClose = useCallback(() => {
     dispatch(closeModal());
   }, [dispatch]);
@@ -71,22 +63,23 @@ export const Order = () => {
   }, [isOpen, handleClose]);
 
   useEffect(() => {
-    const currentDate = new Date();
-    const formatedCurrentDate = formatDate(currentDate);
+    const currentDate = formatDate();
 
-    if (orderData.deliveryDate > formatedCurrentDate || (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(0, 12))) {
+    if (deliveryDate > currentDate || (deliveryDate === currentDate && getTimeInterval(0, 12))) {
       setIntervals(['9-12', '12-15', '15-18', '18-21']);
-    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(12, 15)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(12, 15)) {
       setIntervals(['12-15', '15-18', '18-21']);
-    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(15, 18)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(15, 18)) {
       setIntervals(['15-18', '18-21']);
-    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(18, 21)) {
+    } else if (deliveryDate === currentDate && getTimeInterval(18, 21)) {
       setIntervals(['18-21']);
     } else {
-      setIntervals([]);
+      const newDate = (new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()).replace(/^([^T]+)T(.+)$/,'$1');
+      setDeliveryDate(newDate);
+      setIntervals(['9-12', '12-15', '15-18', '18-21']);
     }
 
-  }, [orderData.deliveryDate, orderData]);
+  }, [deliveryDate]);
 
   const curretnIntervals = [];
   
@@ -220,7 +213,7 @@ export const Order = () => {
                     type="date"
                     name="deliveryDate"
                     min={new Date().toISOString().split("T")[0]}
-                    defaultValue={orderData.deliveryDate}
+                    defaultValue={deliveryDate}
                     onChange={handleChange}
                     required
                   />
