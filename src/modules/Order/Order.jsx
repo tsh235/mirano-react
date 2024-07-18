@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import s from './Order.module.scss';
 import { closeModal, sendOrder, updateOrderData } from '../../redux/orderSlice.js';
 import classNames from 'classnames';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { formatDate } from '../../util.js';
 
 export const Order = () => {
   const dispatch = useDispatch();
   const itemsCart = useSelector(state => state.cart.items);
-  const {isOpen, orderId, data: orderData} = useSelector(state => state.order);
+  const {isOpen, orderId, data: orderData, times: orderInterval} = useSelector(state => state.order);
 
   // можно через классы, только в модульной системе scss 
   // нужно будет писать так: if (target.matches(`.${s.order}`) || target.closest(`.${s.close}`))
@@ -33,6 +34,23 @@ export const Order = () => {
     e.preventDefault();
     dispatch(sendOrder());
   };
+
+  const getTimeInterval = (start, end) => {
+    const currentTime = new Date();
+    const startTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), start, 0, 0);
+    const endTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), end, 0, 0);
+    const newCurrentTime = new Date(currentTime.getTime() + (1 * 60 * 60 * 1000));
+
+    let IsTimeInInterval = null;
+
+    if (startTime <= newCurrentTime && newCurrentTime <= endTime) {
+      IsTimeInInterval = true;
+    } else {
+      IsTimeInInterval = false;
+    }
+
+    return IsTimeInInterval;
+  };
   
   useEffect(() => {
     const handleEscape = (e) => {
@@ -49,6 +67,28 @@ export const Order = () => {
       document.removeEventListener('keydown', handleEscape);
     }
   }, [isOpen, handleClose]);
+
+  const [intervals, setIntervals] = useState([]);
+  console.log('intervals: ', intervals);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const formatedCurrentDate = formatDate(currentDate);
+
+    if (orderData.deliveryDate > formatedCurrentDate || (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(0, 12))) {
+      setIntervals(['9-12', '12-15', '15-18', '18-21']);
+    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(12, 15)) {
+      setIntervals(['12-15', '15-18', '18-21']);
+    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(15, 18)) {
+      setIntervals(['15-18', '18-21']);
+    } else if (orderData.deliveryDate === formatedCurrentDate && getTimeInterval(18, 21)) {
+      setIntervals(['18-21']);
+    } else {
+      setIntervals(['9-12', '12-15', '15-18', '18-21']);
+      console.log('Все');
+    }
+
+  }, [orderData.deliveryDate, orderData]);
 
   if (!isOpen) return null;
   
@@ -183,10 +223,17 @@ export const Order = () => {
                       onChange={handleChange}
                       required
                     >
-                      <option value="9-12">с 9:00 до 12:00</option>
-                      <option value="12-15">с 12:00 до 15:00</option>
-                      <option value="15-18">с 15:00 до 18:00</option>
-                      <option value="18-21">с 18:00 до 21:00</option>
+                      {
+                        intervals.forEach(item => {
+                          Object.entries(orderInterval).map(
+                            ([key, value]) => {
+                              if (key === item) {
+                                return <option key={Math.random()} value={key}>{value}</option>
+                              }
+                            }
+                          )
+                        })
+                      }
                     </select>
                   </div>
                 </div>

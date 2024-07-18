@@ -79,6 +79,12 @@ const initialState = {
     deliveryDate: deliveryDate,
     deliveryTime: '',
   },
+  times: {
+    '9-12': 'с 9:00 до 12:00',
+    '12-15': 'с 12:00 до 15:00',
+    '15-18': 'с 15:00 до 18:00',
+    '18-21': 'с 18:00 до 21:00',
+  }
 };
 
 const orderSlice = createSlice({
